@@ -1,0 +1,14 @@
+.App {
+	display: flex;
+	padding: 16px;
+}
+
+.products {
+	flex: 6;
+	padding-right: 16px;
+}
+
+.cart {
+	flex: 4;
+	padding-left: 16px;
+}
