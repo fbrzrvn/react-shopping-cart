@@ -12,8 +12,16 @@ export default class App extends Component {
 		this.handleChange = this.handleChange.bind(this);
 	}
 
+	componentDidMount() {
+		this.setState({
+			cartList: JSON.parse(localStorage.getItem('products')) || [],
+		});
+	}
+
 	componentDidUpdate() {
-		console.log(this.state.cartList);
+		this.setState(
+			localStorage.setItem('products', JSON.stringify(this.state.cartList))
+		);
 	}
 
 	handleAddToCart(id) {
