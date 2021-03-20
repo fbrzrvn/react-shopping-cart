@@ -3,7 +3,7 @@ import Button from '../../Button/Button';
 
 export default class CartItem extends Component {
 	render() {
-		const quantity = [1, 2, 3, 4, 5, 6, 7, 8, 8, 10];
+		const quantity = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 		const { item, handleRemove, handleChange } = this.props;
 
 		return (

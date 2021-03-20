@@ -6,7 +6,7 @@ export default class App extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { cartList: [] };
+		this.state = { cartList: [], error: false };
 		this.handleAddToCart = this.handleAddToCart.bind(this);
 		this.handleRemove = this.handleRemove.bind(this);
 		this.handleChange = this.handleChange.bind(this);
@@ -32,6 +32,11 @@ export default class App extends Component {
 			const foundItem = cartList.map(item => {
 				if (item.id === id && item.quantity < 10) {
 					item.quantity = Number(item.quantity) + 1;
+				} else if (item.id === id && item.quantity >= 10) {
+					this.setState({ error: true });
+					setTimeout(() => {
+						this.setState({ error: false });
+					}, 3000);
 				}
 				return item;
 			});
@@ -61,7 +66,7 @@ export default class App extends Component {
 	}
 
 	render() {
-		const { cartList } = this.state;
+		const { cartList, error } = this.state;
 
 		return (
 			<div className="App">
@@ -82,6 +87,7 @@ export default class App extends Component {
 				</div>
 				<Cart
 					cartList={cartList}
+					error={error}
 					handleRemove={this.handleRemove}
 					handleChange={this.handleChange}
 				/>

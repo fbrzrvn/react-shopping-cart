@@ -4,7 +4,7 @@ import CartItem from './CartItem/CartItem';
 
 export default class Cart extends Component {
 	render() {
-		const { cartList, handleRemove, handleChange } = this.props;
+		const { cartList, error, handleRemove, handleChange } = this.props;
 		const total = cartList.reduce(
 			(tot, item) => (tot += item.price * item.quantity),
 			0
@@ -26,6 +26,9 @@ export default class Cart extends Component {
 					) : (
 						<h2 className="cart__empty">Your cart is empty</h2>
 					)}
+					{error ? (
+						<h3 className="error">You can add max 10 pieces for product</h3>
+					) : null}
 					<div className="cart__total">
 						<p>Total</p>
 						<p>{total}€</p>
