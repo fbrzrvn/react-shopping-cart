@@ -17,20 +17,39 @@ export default class App extends Component {
 	}
 
 	handleAddToCart(id) {
+		const cartList = this.state.cartList;
 		const selectedProduct = { ...products.find(item => item.id === id) };
-		this.setState(prevVal => ({
-			cartList: [...prevVal.cartList, { ...selectedProduct, quantity: 1 }],
-		}));
+		const index = cartList.findIndex(item => item.id === id);
+		if (index !== -1) {
+			const foundItem = cartList.map(item => {
+				if (item.id === id && item.quantity < 10) {
+					item.quantity = Number(item.quantity) + 1;
+				}
+				return item;
+			});
+			this.setState({ cartList: foundItem });
+		} else {
+			this.setState(prevVal => ({
+				cartList: [...prevVal.cartList, { ...selectedProduct, quantity: 1 }],
+			}));
+		}
 	}
 
 	handleRemove(id) {
-		const cartList = this.state;
-		const selectedProduct = cartList.cartList.filter(item => item.id !== id);
+		const cartList = this.state.cartList;
+		const selectedProduct = cartList.filter(item => item.id !== id);
 		this.setState({ cartList: selectedProduct });
 	}
 
-	handleChange() {
-		console.log('handleChange');
+	handleChange(e, id) {
+		const cartList = this.state.cartList;
+		const foundItem = cartList.map(item => {
+			if (item.id === id) {
+				item.quantity = Number(e.target.value);
+			}
+			return item;
+		});
+		this.setState({ cartList: foundItem });
 	}
 
 	render() {

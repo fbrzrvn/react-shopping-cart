@@ -4,8 +4,11 @@ import CartItem from './CartItem/CartItem';
 
 export default class Cart extends Component {
 	render() {
-		const { cartList, handleRemove } = this.props;
-		const total = cartList.reduce((tot, item) => (tot += item.price), 0);
+		const { cartList, handleRemove, handleChange } = this.props;
+		const total = cartList.reduce(
+			(tot, item) => (tot += item.price * item.quantity),
+			0
+		);
 
 		return (
 			<div className="cart">
@@ -13,7 +16,12 @@ export default class Cart extends Component {
 				<div className="cart__card">
 					{cartList.length > 0 ? (
 						cartList.map(item => (
-							<CartItem key={item.id} item={item} handleRemove={handleRemove} />
+							<CartItem
+								key={item.id}
+								item={item}
+								handleRemove={handleRemove}
+								handleChange={handleChange}
+							/>
 						))
 					) : (
 						<h2 className="cart__empty">Your cart is empty</h2>

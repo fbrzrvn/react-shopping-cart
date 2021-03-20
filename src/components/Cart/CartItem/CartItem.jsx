@@ -4,7 +4,7 @@ import Button from '../../Button/Button';
 export default class CartItem extends Component {
 	render() {
 		const quantity = [1, 2, 3, 4, 5, 6, 7, 8, 8, 10];
-		const { item, handleRemove } = this.props;
+		const { item, handleRemove, handleChange } = this.props;
 
 		return (
 			<div key={item.id} className="cart__item">
@@ -15,7 +15,10 @@ export default class CartItem extends Component {
 						<h3>{item.price}€</h3>
 					</div>
 					<div className="cart__item__info__action">
-						<select>
+						<select
+							value={item.quantity}
+							onChange={e => handleChange(e, item.id)}
+						>
 							{quantity.map((value, index) => (
 								<option key={index} value={value}>
 									{value}
