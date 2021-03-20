@@ -1,0 +1,12 @@
+@mixin btn() {
+	padding: 8px 16px;
+	border: none;
+	border-radius: 4px;
+	text-transform: uppercase;
+	outline: none;
+	cursor: pointer;
+}
+@mixin flexBetween() {
+	display: flex;
+	justify-content: space-between;
+}

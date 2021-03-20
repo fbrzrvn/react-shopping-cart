@@ -1,14 +1,21 @@
 .App {
 	display: flex;
 	padding: 16px;
+	@media screen and (max-width: 576px) {
+		flex-direction: column-reverse;
+	}
 }
-
 .products {
-	flex: 6;
+	flex: 7;
 	padding-right: 16px;
 }
-
 .cart {
-	flex: 4;
-	padding-left: 16px;
+	flex: 3;
+	padding: 0 16px;
+	@media screen and (max-width: 576px) {
+		padding: 0;
+	}
+}
+.btn {
+	@include btn();
 }

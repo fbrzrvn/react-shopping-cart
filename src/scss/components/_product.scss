@@ -11,15 +11,13 @@
 			width: 100%;
 			margin-bottom: 4px;
 		}
+		&__details {
+			padding: 0 8px;
+		}
 		&__info {
-			padding-left: 8px;
-		}
-		&__title,
-		&__price {
-			margin-bottom: 4px;
-		}
-		&__price {
-			margin-bottom: 8px;
+			@include flexBetween();
+			align-items: center;
+			margin: 8px 0 16px;
 		}
 	}
 }

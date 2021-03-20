@@ -5,27 +5,27 @@
 	border-radius: 4px;
 }
 .cart__item {
+	@include flexBetween();
+	align-items: center;
 	margin-bottom: 16px;
-	padding-bottom: 24px;
+	padding: 0 8px;
 	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
 	border-radius: 4px;
 	img {
-		width: 100%;
-		margin-bottom: 4px;
+		width: 120px;
+		height: auto;
 	}
 	&__info {
-		padding: 0 8px;
-	}
-	&__action {
-		display: flex;
-		justify-content: space-between;
-		margin: 8px 0;
-		padding: 0 8px;
+		flex: 1;
+		&__details,
+		&__action {
+			@include flexBetween();
+			margin: 8px 0 16px 16px;
+		}
 	}
 }
 .cart__total {
-	display: flex;
-	justify-content: space-between;
+	@include flexBetween();
 	font-weight: 700;
 	margin: 8px;
 }
