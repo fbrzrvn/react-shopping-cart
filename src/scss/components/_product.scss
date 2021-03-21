@@ -1,0 +1,23 @@
+.product {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, auto));
+	grid-gap: 16px;
+
+	&__card {
+		padding-bottom: 24px;
+		box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+		border-radius: 4px;
+		img {
+			width: 100%;
+			margin-bottom: 4px;
+		}
+		&__details {
+			padding: 0 8px;
+		}
+		&__info {
+			@include flexBetween();
+			align-items: center;
+			margin: 8px 0 16px;
+		}
+	}
+}
