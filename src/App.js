@@ -1,97 +1,80 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+
+import { products } from './utils/product';
 import Product from './components/Product/Product';
 import Cart from './components/Cart/Cart';
-import { products } from './utils/product';
-export default class App extends Component {
-	constructor(props) {
-		super(props);
 
-		this.state = { cartList: [], error: false };
-		this.handleAddToCart = this.handleAddToCart.bind(this);
-		this.handleRemove = this.handleRemove.bind(this);
-		this.handleChange = this.handleChange.bind(this);
-	}
+const App = () => {
+	const [cartList, setCartList] = useState(
+		JSON.parse(localStorage.getItem('products')) || []
+	);
+	const [error, setError] = useState(false);
 
-	componentDidMount() {
-		this.setState({
-			cartList: JSON.parse(localStorage.getItem('products')) || [],
-		});
-	}
+	useEffect(() => {
+		setCartList(localStorage.setItem('products', JSON.stringify(cartList)));
+	}, [cartList]);
 
-	componentDidUpdate() {
-		this.setState(
-			localStorage.setItem('products', JSON.stringify(this.state.cartList))
-		);
-	}
-
-	handleAddToCart(id) {
-		const cartList = this.state.cartList;
-		const selectedProduct = { ...products.find(item => item.id === id) };
+	const handleAddToCart = id => {
 		const index = cartList.findIndex(item => item.id === id);
 		if (index !== -1) {
 			const foundItem = cartList.map(item => {
 				if (item.id === id && item.quantity < 10) {
 					item.quantity = Number(item.quantity) + 1;
 				} else if (item.id === id && item.quantity >= 10) {
-					this.setState({ error: true });
+					setError(true);
 					setTimeout(() => {
-						this.setState({ error: false });
+						setError(false);
 					}, 3000);
 				}
 				return item;
 			});
-			this.setState({ cartList: foundItem });
+			setCartList(foundItem);
 		} else {
-			this.setState(prevVal => ({
-				cartList: [...prevVal.cartList, { ...selectedProduct, quantity: 1 }],
-			}));
+			const selectedProduct = { ...products.find(item => item.id === id) };
+			setCartList([...cartList, { ...selectedProduct, quantity: 1 }]);
 		}
-	}
+	};
 
-	handleRemove(id) {
-		const cartList = this.state.cartList;
+	const handleRemove = id => {
 		const selectedProduct = cartList.filter(item => item.id !== id);
-		this.setState({ cartList: selectedProduct });
-	}
+		setCartList(selectedProduct);
+	};
 
-	handleChange(e, id) {
-		const cartList = this.state.cartList;
+	const handleChange = (e, id) => {
 		const foundItem = cartList.map(item => {
 			if (item.id === id) {
 				item.quantity = Number(e.target.value);
 			}
 			return item;
 		});
-		this.setState({ cartList: foundItem });
-	}
+		setCartList(foundItem);
+	};
 
-	render() {
-		const { cartList, error } = this.state;
-
-		return (
-			<div className="App">
-				<div className="products">
-					<h2>Shop</h2>
-					<div className="product">
-						{products.map(prod => (
-							<Product
-								key={prod.id}
-								id={prod.id}
-								img={prod.img}
-								name={prod.name}
-								price={prod.price}
-								handleAddToCart={this.handleAddToCart}
-							/>
-						))}
-					</div>
+	return (
+		<div className="App">
+			<div className="products">
+				<h2>Shop</h2>
+				<div className="product">
+					{products.map(prod => (
+						<Product
+							key={prod.id}
+							id={prod.id}
+							img={prod.img}
+							name={prod.name}
+							price={prod.price}
+							handleAddToCart={handleAddToCart}
+						/>
+					))}
 				</div>
-				<Cart
-					cartList={cartList}
-					error={error}
-					handleRemove={this.handleRemove}
-					handleChange={this.handleChange}
-				/>
 			</div>
-		);
-	}
-}
+			<Cart
+				cartList={cartList}
+				error={error}
+				handleRemove={handleRemove}
+				handleChange={handleChange}
+			/>
+		</div>
+	);
+};
+
+export default App;
